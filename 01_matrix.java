@@ -11,66 +11,58 @@ class Solution {
 
         int result[][] = new int[mat.length][mat[0].length];
 
-        for(int idx=0; idx<mat.length; idx++){
-            for(int jdx=0; jdx<mat[idx].length; jdx++){
-                
-                LinkedList<Integer> rq = new LinkedList<>();
-                LinkedList<Integer> cq = new LinkedList<>();
+        for(int idx=0; idx<RR; idx++){
+            for(int jdx=0; jdx<CC; jdx++){
 
-                boolean visited[][] = new boolean[mat.length][mat[0].length];
-                int nodes_in_next_layer = 0;
-                int nodes_left_in_layer = 1;
-                
-                int src = mat[idx][jdx];
-                rq.add(idx);
-                cq.add(jdx);
-                int move_count = 0;
+                if(mat[idx][jdx]==0){
+                    result[idx][jdx] = 0;
+                }else{
 
-                visited[idx][jdx] = true;
+                    LinkedList<Integer> rq = new LinkedList<>();
+                    LinkedList<Integer> cq = new LinkedList<>();
 
-                while(rq.size()>0){
-                    int min_count = 0;
-                    int r = rq.poll();
-                    int c = cq.poll();
+                    rq.add(idx);
+                    cq.add(jdx);
+                    int final_move = 0;
+                    boolean visited[][] = new boolean[RR][CC];
+                    int node_left = 1;
+                    int node_next = 0;
 
-                    if(mat[idx][jdx]==0){
-                        result[idx][jdx] = 0;
-                        break;
-                    }
-
-                    for(int i=0; i<4; i++){
-                        int rr = r + dx[i];
-                        int cc = c + dy[i];
+                    while(rq.size()>0){
+                        int r = rq.poll();
+                        int c = cq.poll();
+                        visited[r][c] = true;
                         
-                        if(rr>=RR || cc>=CC) continue;
+                        if(mat[r][c]==0){
+                            break;
+                        }
+                        for(int i=0; i<4; i++){
+                            int rr = r + dx[i];
+                            int cc = c + dy[i];
 
-                        if(rr<0 || cc<0) continue;
+                            if (rr>=RR || cc>=CC) continue;
+                            if(rr<0 || cc<0) continue;
 
-                        if(visited[rr][cc]) continue;
+                            if(visited[rr][cc]) continue;
 
-                        if(mat[rr][cc]==0){
-                            //  result[rr][cc] = 0;
-                            continue;
+                            rq.add(rr);                         
+                            cq.add(cc);
+                            node_next++;
+                            visited[rr][cc] = true;
                         }
 
-                        rq.add(rr);
-                        cq.add(cc);
-                        
-                        visited[rr][cc] = true;
-                        nodes_in_next_layer++;
+                        node_left--;
+                        if(node_left==0){
+                            node_left = node_next;
+                            node_next = 0;
+                            final_move++;
+                        }
+
+
                     }
 
-                    nodes_left_in_layer--;
-                    if(nodes_left_in_layer==0){
-                        nodes_left_in_layer = nodes_in_next_layer;
-                        min_count ++;
-                        nodes_in_next_layer = 0; 
-                    }
-                move_count += min_count;  
+                    result[idx][jdx] = final_move;
                 }
-
-                result[idx][jdx] = move_count;
-                
             }
         }
         return result;
