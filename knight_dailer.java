@@ -24,7 +24,6 @@ class Solution {
                     continue;
                 }
                 mat[i][j] = -1;
-
             }
         }
 
@@ -33,31 +32,42 @@ class Solution {
         int max = 0;
 
         for(int i=0; i<4; i++){
-            for(int j=0; j<3; j++){
+            for(int j=0; j<4; j++){
                 
                 
                 int temp[][] = mat.clone();
                 
-                if(temp[i][j]==-2){
-                    continue;
-                }
+                // if(temp[i][j]==-2){
+                //     continue;
+                // }
 
                 temp[i][j] = 0;
                 boolean res = solveUtil(i, j, 1, x_move, y_move, temp, 1, n);
-
-                System.out.println(i+", "+j+" : "+res);
+                printMat(temp);
+                // System.out.println(i+", "+j+" : "+res);
                 if(res){
                     max+=1;
                 }
             }
         }
 
-        return m;
+
+
+        return max;
     }
 
     public static boolean isSafe(int x, int y, int N, int mat[][]){
 
         return (x>=0 && x<N && y>=0 && y<N && mat[x][y]==-1);
+    }
+
+    public static void printMat(int mat[][]){
+        for(int i[]: mat){
+            for(int a: i)
+                System.out.print(a+" ");
+            System.out.println();
+        }
+            
     }
 
     public static boolean solveUtil(int x, int y, int move, int[] x_move, int[] y_move, int mat[][], int n, int N){
@@ -67,26 +77,19 @@ class Solution {
         if(move==4*4)
             return true;
 
-        
-        // return true;
-
         for(int i=0; i<8; i++){
+
             next_x = x + x_move[i];
             next_y = y + y_move[i];
 
             if(isSafe(next_x, next_y, 4, mat)){
+                
                 mat[next_x][next_y] = move;
                 
-                // if(n==N){
-                    m+=1;
-                //     n=1;
-                // }
                 if(solveUtil(next_x, next_y, move+1, x_move, y_move, mat, n+1, N)){
-                    
                     return true;
                 }else{
                     mat[next_x][next_y] = -1;
-                    // m-=1;
                 }
             }
         }
@@ -96,7 +99,7 @@ class Solution {
 
     public static void main(String args[]){
 
-        int ans = knightDialer(2);
+        int ans = knightDialer(1);
 
         System.out.println(ans);
     }
