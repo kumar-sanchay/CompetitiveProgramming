@@ -1,18 +1,15 @@
 class Solution {
     public int removeDuplicates(int[] nums) {
         
-        int j = 0;
+        int j = 1;
         
-        int d = 0;
+        int d = 1;
         
-        
-        
-        for(int i=0; i<nums.length-1; i++){
-            
-            if(i==nums.length-3)
-                j++;
+        int prev = nums[0];
+        for(int i=1; i<nums.length; i++){
             d++;
-            if(nums[i]==nums[i+1]){
+            int p = nums[i];
+            if(prev==nums[i]){
                 
                 
                 if(d>2){
@@ -21,13 +18,11 @@ class Solution {
                     j++;
                 }
             }else{
-                if(d>2){
-                    nums[i] = Integer.MAX_VALUE;
-                }else{
-                    j++;    
-                }
-                d=0;
-            }    
+                d=1;
+                j++;
+            }
+            
+            prev=p;
         }
         
         Arrays.sort(nums);
