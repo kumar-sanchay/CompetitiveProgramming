@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
    
-    public List<String> generateParenthesis(int n) {
+    public static List<String> generateParenthesis(int n) {
         
         char s[] = new char[n];
         List<String> list  = new ArrayList<>();
@@ -11,7 +11,7 @@ class Solution {
         return list;
     }
 
-    public List<String> parenthesis_genrator(char str[], int n, int open, int close, int pos, List<String> list){
+    public static List<String> parenthesis_genrator(char str[], int n, int open, int close, int pos, List<String> list){
 
         if(close==n){   
             String s = "";
@@ -35,5 +35,7 @@ class Solution {
         return list;
     }
 
-    
+    public static void main(String args[]){
+        
+    }
 }
