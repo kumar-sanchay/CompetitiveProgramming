@@ -4,7 +4,7 @@ class Solution {
    
     public static List<String> generateParenthesis(int n) {
         
-        char s[] = new char[n];
+        char s[] = new char[2*n];
         List<String> list  = new ArrayList<>();
 
         list = parenthesis_genrator(s, n, 0, 0, 0, list);
@@ -15,7 +15,7 @@ class Solution {
 
         if(close==n){   
             String s = "";
-            for(int i=0; i<n; i++){
+            for(int i=0; i<2*n; i++){
                 s += String.valueOf(str[i]);
             }
             list.add(s);
@@ -36,6 +36,9 @@ class Solution {
     }
 
     public static void main(String args[]){
-        
+
+        List<String> l = generateParenthesis(3);
+
+        System.out.println(l);
     }
 }
