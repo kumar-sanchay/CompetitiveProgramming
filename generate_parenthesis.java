@@ -1,44 +1,34 @@
 import java.util.*;
-
 class Solution {
-   
-    public static List<String> generateParenthesis(int n) {
+    public int minimumTotal(List<List<Integer>> triangle) {
         
-        char s[] = new char[2*n];
-        List<String> list  = new ArrayList<>();
-
-        list = parenthesis_genrator(s, n, 0, 0, 0, list);
-        return list;
+        int cache[] = new int[triangle.size()];
+        Arrays.fill(cache, Integer.MAX_VALUE);
+        return cal(triangle, 0, 0, cache);
     }
-
-    public static List<String> parenthesis_genrator(char str[], int n, int open, int close, int pos, List<String> list){
-
-        if(close==n){   
-            String s = "";
-            for(int i=0; i<2*n; i++){
-                s += String.valueOf(str[i]);
-            }
-            list.add(s);
-        }else{
-
-            if(open>close){
-                str[pos] = ')';
-                parenthesis_genrator(str, n, open, close+1, pos+1, list);
-            }
-
-            if(open<n){
-                str[pos] = '(';
-                parenthesis_genrator(str, n, open+1, close, pos+1, list);
-            }
+    
+    public int cal(List<List<Integer>> triangle, int idx, int p, int[] cache){
+        
+        if(idx>=triangle.size()){
+            // System.out.println(sum);
+            return 0;    
         }
-
-        return list;
-    }
-
-    public static void main(String args[]){
-
-        List<String> l = generateParenthesis(3);
-
-        System.out.println(l);
+        
+        // if(cache[idx]!=Integer.MAX_VALUE){
+        //     return cache[idx];
+        // }
+        
+        List<Integer> l = triangle.get(idx);
+        int v = Integer.MAX_VALUE;
+        
+        for(int i=p; i<p+2 && i<l.size(); i++){
+           int val = l.get(i) + cal(triangle, idx+1, i, cache);
+            
+           if(val<v){
+               v = val;
+           }
+        }
+        cache[idx] = v;
+        return v;
     }
 }
